@@ -26,6 +26,11 @@ busy=set()
 async def lifespan(app):
     validate_settings()
     db.initialize()
+    # A failed/ungraded conversation can continue with the repaired pipeline.
+    # Never relabel old completed reports or compare different prompt versions.
+    with db.connection() as c:
+        c.execute("UPDATE sessions SET prompt_version=? WHERE status='active' AND report IS NULL AND prompt_version='prompts-1.1-rag'",
+                  (PROMPT_VERSION,))
     async with connect_business_tools() as tools:
         app.state.tools=tools
         app.state.engine=TrainingEngine(tools)
@@ -84,7 +89,7 @@ def friendly_error(exc):
         return '설정한 OpenAI 모델에 접근할 수 없습니다. OPENAI_MODEL과 계정 권한을 확인하세요.'
     if name=='APIConnectionError':
         return 'OpenAI에 연결하지 못했습니다. 인터넷 연결을 확인하세요.'
-    if isinstance(exc,ValueError) and str(exc).startswith(('평가의','개선 답변의','정책 평가는','AI 고객이')):
+    if isinstance(exc,ValueError) and str(exc).startswith(('평가의','개선 답변의','정책 평가는','정책 검색','AI 고객이')):
         return str(exc)
     return '요청을 완료하지 못했습니다. 입력·모델 설정을 확인한 뒤 다시 시도하세요. 오류 유형: '+name
 

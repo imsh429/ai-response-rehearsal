@@ -171,7 +171,7 @@ def test_openai_sdk_streaming_and_structured_agents_with_mock_transport(client,m
                  'action':'다음 절차를 구체적으로 안내하세요.'}
                 for key in ('facts','policy','solution','communication')]}
         else:
-            m=data['trainee_messages'][0]
+            m=next(m for m in data['messages'] if m['role']=='user')
             out={'strengths':['먼저 상황을 확인하려 했습니다.'],'next_actions':['후속 절차를 구체적으로 안내하세요.'],'rewrites':[{'message_ref':m['message_ref'],'improved':'불편을 드려 죄송합니다. 주문과 이전 안내를 먼저 확인하겠습니다.','reason':'사실 확인을 먼저 안내합니다.'}]}
         return httpx.Response(200,json={'id':'chatcmpl-mock','object':'chat.completion','created':1,'model':'gpt-5-mini','choices':[{'index':0,'message':{'role':'assistant','content':None,'tool_calls':[{'id':'call_mock','type':'function','function':{'name':name,'arguments':json.dumps(out,ensure_ascii=False)}}]},'finish_reason':'tool_calls'}],'usage':{'prompt_tokens':20,'completion_tokens':30,'total_tokens':50}})
 

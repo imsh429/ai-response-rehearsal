@@ -1,8 +1,19 @@
 """Read-only business tools. stdout belongs exclusively to the MCP protocol."""
 from mcp.server.fastmcp import FastMCP
+from contextlib import asynccontextmanager
 from . import db
+from .rag_worker import PolicySearchWorker
 
-mcp = FastMCP('rehearsal-business-tools')
+search_worker = PolicySearchWorker()
+
+@asynccontextmanager
+async def lifespan(server):
+    try:
+        yield {}
+    finally:
+        await search_worker.close()
+
+mcp = FastMCP('rehearsal-business-tools', lifespan=lifespan)
 
 def data_for(session_id: str):
     s = db.session(session_id)
@@ -26,11 +37,10 @@ def get_policy(session_id: str) -> list[dict]:
     return data_for(session_id)['policies']
 
 @mcp.tool()
-def search_policy(session_id: str, query: str, top_k: int = 4) -> dict:
+async def search_policy(session_id: str, query: str, top_k: int = 4) -> dict:
     """고정된 회사 정책 코퍼스를 벡터 검색하여 관련 원문과 출처를 반환합니다."""
-    from .rag import get_retriever
     snap = data_for(session_id)
-    result = get_retriever().search(snap.get('policy_corpus', snap['policies']), query, top_k)
+    result = await search_worker.search(snap.get('policy_corpus', snap['policies']), query, top_k)
     for hit in result['hits']:
         hit['resource_uri'] = f"policy://{session_id}/{hit['id']}"
     return result

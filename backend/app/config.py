@@ -10,7 +10,7 @@ MODEL = os.getenv('OPENAI_MODEL', 'gpt-5-mini')
 ADMIN_TOKEN = os.getenv('ADMIN_TOKEN', 'local-admin-2026')
 MAX_TURNS = 20
 RUBRIC_VERSION = 'rubric-1.0'
-PROMPT_VERSION = 'prompts-1.1-rag'
+PROMPT_VERSION = 'prompts-1.2-fast-rag'
 
 def validate_settings():
     if MODE not in ('openai', 'demo'):

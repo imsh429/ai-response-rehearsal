@@ -19,8 +19,21 @@ class BusinessTools:
         if name not in ('get_order','get_history','get_policy','search_policy'):
             raise ValueError('허용되지 않은 도구입니다.')
         async with self.lock:
-            result = await asyncio.wait_for(self.session.call_tool(name, {'session_id':sid, **arguments}), timeout=100 if name == 'search_policy' else 15)
+            try:
+                result = await asyncio.wait_for(self.session.call_tool(name, {'session_id':sid, **arguments}), timeout=55 if name == 'search_policy' else 15)
+            except TimeoutError:
+                if name == 'search_policy':
+                    raise ValueError('정책 검색 시간이 초과됐습니다. MCP 연결을 확인하고 서버를 재시작하세요. 대화는 저장되어 있습니다.') from None
+                raise
         if result.isError:
+            if name == 'search_policy':
+                # Only forward our own fixed, stage-specific error messages.
+                from .rag_worker import STAGES
+                raw = ' '.join(c.text for c in result.content if c.type == 'text')
+                for stage in STAGES.values():
+                    if stage+'.' in raw:
+                        raise ValueError(f'정책 검색 실패: {stage}. 대화는 저장되어 있습니다. 서버 터미널의 [RAG] 단계 기록을 확인하세요.')
+                raise ValueError('정책 검색에 실패했습니다. 서버 터미널의 [RAG] 단계 기록을 확인하세요. 대화는 저장되어 있습니다.')
             raise RuntimeError('업무 데이터 조회에 실패했습니다.')
         structured = result.structuredContent
         if structured is not None:

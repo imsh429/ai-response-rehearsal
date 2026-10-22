@@ -1,0 +1,1858 @@
+{
+  "metadata": {
+    "created_at": "2026-10-22T01:09:25.471900+00:00",
+    "mode": "openai",
+    "quality_measurement": true,
+    "judge_enabled": true,
+    "model": "gpt-5-mini",
+    "embedding_model": "text-embedding-3-small",
+    "corpus_hash": "17177ed0420f57d72fba6dfae15c6594297b0507f4a32aa02e1350a22a8598fc",
+    "dataset_sha256": "4596bed489bf9e72a2f4bb7ec45436b5f7b49459b59b48617d1a045d4e4a1b42",
+    "judge_prompt_sha256": "73f4588452918a42ea356c21871b9499b60ac89ce211c5eb72e09e08758db83a",
+    "script_sha256": "ec0855186dd05df30e3658cd08fb72559a87fd422012aaeb3b6e84156d7871f5",
+    "source_hashes": {
+      "backend\\app\\rag.py": "8d214d0b6d033ac47896f3467f8621dde4a27772c0e7cc385407515b0c62ada2",
+      "backend\\app\\seed.py": "1a9cefb74db5ebcc8092462a80f61536bf5153c9c8c8e349d5a88042e33f7759"
+    },
+    "top_k": 4,
+    "judge_max_tokens": 3500,
+    "sdk_max_retries": 1,
+    "reasoning_effort": "low",
+    "repeat": 1,
+    "case_count": 12,
+    "environment": {
+      "python": "3.14.0"
+    },
+    "notes": [
+      "Self-authored 12-case dataset; not independent human validation.",
+      "Before provides all 20 policies. Its full-corpus recall is a coverage baseline, not Hit@4.",
+      "cl100k context tokens are local counts, not provider billed tokens.",
+      "All-attempt judge accuracy counts API/schema failures as incorrect.",
+      "Retrieval failures count as zero recall/precision. Context length averages use available contexts.",
+      "Embedding usage includes cold index build separately; LLM usage is per row.",
+      "Demo vectors are plumbing only. Semantic recall and accuracy are null."
+    ]
+  },
+  "summary": {
+    "before": {
+      "attempts": 12,
+      "successful": 12,
+      "mean_elapsed_ms_all_attempts": 4143.6,
+      "mean_context_docs": 20,
+      "mean_context_chars": 1631,
+      "mean_context_tokens_cl100k": 1886,
+      "expected_recall": 1.0,
+      "context_precision": 0.05,
+      "context_measured": 12,
+      "judge_accuracy_all_attempts": 0.9166666666666666
+    },
+    "after": {
+      "attempts": 12,
+      "successful": 12,
+      "mean_elapsed_ms_all_attempts": 3773.66,
+      "mean_context_docs": 4,
+      "mean_context_chars": 346.4167,
+      "mean_context_tokens_cl100k": 388.9167,
+      "expected_recall": 1.0,
+      "context_precision": 0.25,
+      "context_measured": 12,
+      "judge_accuracy_all_attempts": 1.0
+    }
+  },
+  "rows": [
+    {
+      "repeat": 1,
+      "case_id": "B01",
+      "variant": "before",
+      "success": true,
+      "retrieval": null,
+      "judge_correct": true,
+      "usage": {
+        "gpt-5-mini-2025-08-07": {
+          "input_tokens": 1577,
+          "output_tokens": 385,
+          "total_tokens": 1962,
+          "input_token_details": {
+            "audio": 0,
+            "cache_read": 0
+          },
+          "output_token_details": {
+            "audio": 0,
+            "reasoning": 256
+          }
+        }
+      },
+      "error": null,
+      "context_ids": [
+        "ADDRESS-06",
+        "BUSINESS-18",
+        "CHECK-01",
+        "COUPON-09",
+        "DELAY-03",
+        "DUPLICATE-16",
+        "GIFT-10",
+        "INTERNATIONAL-17",
+        "MEMBER-12",
+        "PACKAGE-15",
+        "PARTIAL-20",
+        "PICKUP-19",
+        "POINT-08",
+        "PRIVACY-07",
+        "PROMISE-05",
+        "RECEIPT-11",
+        "REFUND-02",
+        "RETURN-04",
+        "STOCK-13",
+        "WARRANTY-14"
+      ],
+      "context_docs": 20,
+      "expected_recall": 1.0,
+      "context_precision": 0.05,
+      "context_chars": 1631,
+      "context_tokens_cl100k": 1886,
+      "judgment": {
+        "policy_compliant": true,
+        "policy_ids": [
+          "REFUND-02",
+          "CHECK-01"
+        ],
+        "reason": "응답은 '출고 전 취소 접수 가능'과 '승인 후 카드 환불 영업일 3~5일 소요'로 정책 REFUND-02의 내용을 정확히 전달하고 있으며, 과도한 확정(즉시 환불 보장)을 하지 않아 CHECK-01의 '확인되지 않은 처리 완료를 확정적으로 약속하지 않는다'를 준수합니다."
+      },
+      "judge_evidence_recall": 1.0,
+      "elapsed_ms": 4360.46
+    },
+    {
+      "repeat": 1,
+      "case_id": "B01",
+      "variant": "after",
+      "success": true,
+      "retrieval": {
+        "query": "아직 출고 전인데 취소하면 카드 환불은 언제 되나요?",
+        "hits": [
+          {
+            "id": "REFUND-02",
+            "title": "취소 및 환불",
+            "text": "출고 전 주문은 취소 접수를 할 수 있다. 취소 승인 후 카드 환불은 영업일 3~5일이 소요된다. 즉시 입금이나 당일 환불 완료를 보장하지 않는다.",
+            "distance": 0.334504
+          },
+          {
+            "id": "PARTIAL-20",
+            "title": "부분 취소",
+            "text": "여러 상품을 주문한 경우 출고 전 상품 단위로 부분 취소를 접수할 수 있다. 묶음 할인과 배송비 변동은 승인 전에 확인한다.",
+            "distance": 0.555482
+          },
+          {
+            "id": "DELAY-03",
+            "title": "배송 지연 보상",
+            "text": "약속된 출고일에서 2일 이상 지연된 경우 배송비 3000원 환급을 접수할 수 있다. 추가 현금 보상은 상담사 권한 밖이며 관리자 검토로 이관한다. 출고되지 않은 주문의 도착일은 확정할 수 없다.",
+            "distance": 0.603051
+          },
+          {
+            "id": "DUPLICATE-16",
+            "title": "중복 결제",
+            "text": "주문번호와 결제 내역을 대조하여 중복 승인 여부를 확인한다. 단순 알림 중복과 실제 결제 중복을 구분하고 확인 전 취소 완료를 안내하지 않는다.",
+            "distance": 0.618059
+          }
+        ],
+        "top_k": 4,
+        "corpus_size": 20,
+        "corpus_hash": "17177ed0420f57d72fba6dfae15c6594297b0507f4a32aa02e1350a22a8598fc",
+        "embedding_mode": "openai",
+        "embedding_model": "text-embedding-3-small",
+        "index_cache_hit": false,
+        "index_ms": 1490.63,
+        "query_ms": 556.73,
+        "elapsed_ms": 2047.38,
+        "embedding_usage": {
+          "index": {
+            "prompt_tokens": 1524,
+            "total_tokens": 1524
+          },
+          "query": {
+            "prompt_tokens": 30,
+            "total_tokens": 30
+          }
+        }
+      },
+      "judge_correct": true,
+      "usage": {
+        "gpt-5-mini-2025-08-07": {
+          "input_tokens": 555,
+          "output_tokens": 270,
+          "total_tokens": 825,
+          "input_token_details": {
+            "audio": 0,
+            "cache_read": 0
+          },
+          "output_token_details": {
+            "audio": 0,
+            "reasoning": 128
+          }
+        }
+      },
+      "error": null,
+      "context_ids": [
+        "DELAY-03",
+        "DUPLICATE-16",
+        "PARTIAL-20",
+        "REFUND-02"
+      ],
+      "context_docs": 4,
+      "expected_recall": 1.0,
+      "context_precision": 0.25,
+      "context_chars": 364,
+      "context_tokens_cl100k": 400,
+      "judgment": {
+        "policy_compliant": true,
+        "policy_ids": [
+          "REFUND-02"
+        ],
+        "reason": "사용자 질문은 출고 전 취소 시 카드 환불 시점에 대한 것이며, 제공된 답변은 \"출고 전 취소 접수 가능, 승인 후 영업일 3~5일 소요\"라고 명시하고 있습니다. 이는 정책 REFUND-02의 문언(출고 전 주문은 취소 접수 가능하며 취소 승인 후 카드 환불은 영업일 3~5일 소요)과 일치하므로 정책 준수합니다."
+      },
+      "judge_evidence_recall": 1.0,
+      "elapsed_ms": 5165.64
+    },
+    {
+      "repeat": 1,
+      "case_id": "B02",
+      "variant": "after",
+      "success": true,
+      "retrieval": {
+        "query": "약속한 출고일보다 3일 늦었습니다. 배송비와 10만 원 보상 주세요.",
+        "hits": [
+          {
+            "id": "DELAY-03",
+            "title": "배송 지연 보상",
+            "text": "약속된 출고일에서 2일 이상 지연된 경우 배송비 3000원 환급을 접수할 수 있다. 추가 현금 보상은 상담사 권한 밖이며 관리자 검토로 이관한다. 출고되지 않은 주문의 도착일은 확정할 수 없다.",
+            "distance": 0.346028
+          },
+          {
+            "id": "REFUND-02",
+            "title": "취소 및 환불",
+            "text": "출고 전 주문은 취소 접수를 할 수 있다. 취소 승인 후 카드 환불은 영업일 3~5일이 소요된다. 즉시 입금이나 당일 환불 완료를 보장하지 않는다.",
+            "distance": 0.582182
+          },
+          {
+            "id": "PICKUP-19",
+            "title": "방문 수거",
+            "text": "반품 접수 후 택배사의 수거 일정을 확인하여 안내한다. 상담사가 기사 방문 시각을 확정하지 않는다. 상품은 구성품과 함께 포장하도록 안내한다.",
+            "distance": 0.618332
+          },
+          {
+            "id": "PARTIAL-20",
+            "title": "부분 취소",
+            "text": "여러 상품을 주문한 경우 출고 전 상품 단위로 부분 취소를 접수할 수 있다. 묶음 할인과 배송비 변동은 승인 전에 확인한다.",
+            "distance": 0.639037
+          }
+        ],
+        "top_k": 4,
+        "corpus_size": 20,
+        "corpus_hash": "17177ed0420f57d72fba6dfae15c6594297b0507f4a32aa02e1350a22a8598fc",
+        "embedding_mode": "openai",
+        "embedding_model": "text-embedding-3-small",
+        "index_cache_hit": true,
+        "index_ms": 3.9,
+        "query_ms": 146.41,
+        "elapsed_ms": 150.32,
+        "embedding_usage": {
+          "index": null,
+          "query": {
+            "prompt_tokens": 35,
+            "total_tokens": 35
+          }
+        }
+      },
+      "judge_correct": true,
+      "usage": {
+        "gpt-5-mini-2025-08-07": {
+          "input_tokens": 544,
+          "output_tokens": 367,
+          "total_tokens": 911,
+          "input_token_details": {
+            "audio": 0,
+            "cache_read": 0
+          },
+          "output_token_details": {
+            "audio": 0,
+            "reasoning": 256
+          }
+        }
+      },
+      "error": null,
+      "context_ids": [
+        "DELAY-03",
+        "PARTIAL-20",
+        "PICKUP-19",
+        "REFUND-02"
+      ],
+      "context_docs": 4,
+      "expected_recall": 1.0,
+      "context_precision": 0.25,
+      "context_chars": 363,
+      "context_tokens_cl100k": 408,
+      "judgment": {
+        "policy_compliant": false,
+        "policy_ids": [
+          "DELAY-03"
+        ],
+        "reason": "The agent's answer promises to pay 100,000 KRW directly. Policy DELAY-03 allows processing a 3,000 KRW shipping refund for delays of 2 days or more and states that additional cash compensation is outside the counselor's authority and must be escalated to a manager. Therefore promising immediate 100,000 KRW violates the policy."
+      },
+      "judge_evidence_recall": 1.0,
+      "elapsed_ms": 3782.71
+    },
+    {
+      "repeat": 1,
+      "case_id": "B02",
+      "variant": "before",
+      "success": true,
+      "retrieval": null,
+      "judge_correct": true,
+      "usage": {
+        "gpt-5-mini-2025-08-07": {
+          "input_tokens": 1571,
+          "output_tokens": 332,
+          "total_tokens": 1903,
+          "input_token_details": {
+            "audio": 0,
+            "cache_read": 0
+          },
+          "output_token_details": {
+            "audio": 0,
+            "reasoning": 192
+          }
+        }
+      },
+      "error": null,
+      "context_ids": [
+        "ADDRESS-06",
+        "BUSINESS-18",
+        "CHECK-01",
+        "COUPON-09",
+        "DELAY-03",
+        "DUPLICATE-16",
+        "GIFT-10",
+        "INTERNATIONAL-17",
+        "MEMBER-12",
+        "PACKAGE-15",
+        "PARTIAL-20",
+        "PICKUP-19",
+        "POINT-08",
+        "PRIVACY-07",
+        "PROMISE-05",
+        "RECEIPT-11",
+        "REFUND-02",
+        "RETURN-04",
+        "STOCK-13",
+        "WARRANTY-14"
+      ],
+      "context_docs": 20,
+      "expected_recall": 1.0,
+      "context_precision": 0.05,
+      "context_chars": 1631,
+      "context_tokens_cl100k": 1886,
+      "judgment": {
+        "policy_compliant": false,
+        "policy_ids": [
+          "DELAY-03",
+          "PROMISE-05",
+          "CHECK-01"
+        ],
+        "reason": "The agent promised to pay 100,000 won immediately, which violates DELAY-03 stating additional cash compensation is outside the counselor's authority and must be escalated to management. The agent also made a definitive payment promise without confirming order or consultation history, violating CHECK-01 which requires verifying order status before proposing solutions. PROMISE-05 further prohibits unilaterally confirming remedies that exceed policy or prior incorrect assurances and requires manager review with a specified response target."
+      },
+      "judge_evidence_recall": 1.0,
+      "elapsed_ms": 4193.93
+    },
+    {
+      "repeat": 1,
+      "case_id": "B03",
+      "variant": "before",
+      "success": true,
+      "retrieval": null,
+      "judge_correct": true,
+      "usage": {
+        "gpt-5-mini-2025-08-07": {
+          "input_tokens": 1589,
+          "output_tokens": 460,
+          "total_tokens": 2049,
+          "input_token_details": {
+            "audio": 0,
+            "cache_read": 0
+          },
+          "output_token_details": {
+            "audio": 0,
+            "reasoning": 320
+          }
+        }
+      },
+      "error": null,
+      "context_ids": [
+        "ADDRESS-06",
+        "BUSINESS-18",
+        "CHECK-01",
+        "COUPON-09",
+        "DELAY-03",
+        "DUPLICATE-16",
+        "GIFT-10",
+        "INTERNATIONAL-17",
+        "MEMBER-12",
+        "PACKAGE-15",
+        "PARTIAL-20",
+        "PICKUP-19",
+        "POINT-08",
+        "PRIVACY-07",
+        "PROMISE-05",
+        "RECEIPT-11",
+        "REFUND-02",
+        "RETURN-04",
+        "STOCK-13",
+        "WARRANTY-14"
+      ],
+      "context_docs": 20,
+      "expected_recall": 1.0,
+      "context_precision": 0.05,
+      "context_chars": 1631,
+      "context_tokens_cl100k": 1886,
+      "judgment": {
+        "policy_compliant": true,
+        "policy_ids": [
+          "RETURN-04",
+          "CHECK-01"
+        ],
+        "reason": "The answer states that defects are accepted within 30 days and that photo confirmation and inspection are required before exchange or refund, which directly matches RETURN-04. It does not promise a full refund prior to inspection, also consistent with RETURN-04. CHECK-01 advises confirming order status and prior consultation before providing remedies; the answer does not explicitly state that such checks were performed but it does not make any prohibited promises about delivery or completion. Overall the content aligns with the return/defect policy."
+      },
+      "judge_evidence_recall": 1.0,
+      "elapsed_ms": 5731.63
+    },
+    {
+      "repeat": 1,
+      "case_id": "B03",
+      "variant": "after",
+      "success": true,
+      "retrieval": {
+        "query": "받은 지 8일 된 블렌더가 자꾸 꺼져요. 하자 반품 가능한가요?",
+        "hits": [
+          {
+            "id": "RETURN-04",
+            "title": "반품 기준",
+            "text": "단순 변심은 수령 후 7일 이내 미사용 상품에 한해 반품을 접수한다. 수령 후 30일 이내 제품 하자가 접수되면 사진 확인 및 검수 후 교환 또는 환불을 진행한다. 하자 검수 전 전액 환불을 확정하지 않는다.",
+            "distance": 0.526329
+          },
+          {
+            "id": "WARRANTY-14",
+            "title": "보증 수리",
+            "text": "수령 후 30일을 넘긴 제품 고장은 구매일과 증상을 확인하고 보증 수리 담당 부서로 연결한다. 무상 수리 여부는 점검 후 결정된다.",
+            "distance": 0.625946
+          },
+          {
+            "id": "STOCK-13",
+            "title": "품절 상품",
+            "text": "재입고 일정이 확인되지 않으면 날짜를 약속하지 않는다. 알림 신청 방법 또는 대체 상품 확인 절차를 안내한다.",
+            "distance": 0.636291
+          },
+          {
+            "id": "DELAY-03",
+            "title": "배송 지연 보상",
+            "text": "약속된 출고일에서 2일 이상 지연된 경우 배송비 3000원 환급을 접수할 수 있다. 추가 현금 보상은 상담사 권한 밖이며 관리자 검토로 이관한다. 출고되지 않은 주문의 도착일은 확정할 수 없다.",
+            "distance": 0.646785
+          }
+        ],
+        "top_k": 4,
+        "corpus_size": 20,
+        "corpus_hash": "17177ed0420f57d72fba6dfae15c6594297b0507f4a32aa02e1350a22a8598fc",
+        "embedding_mode": "openai",
+        "embedding_model": "text-embedding-3-small",
+        "index_cache_hit": true,
+        "index_ms": 3.17,
+        "query_ms": 308.66,
+        "elapsed_ms": 311.85,
+        "embedding_usage": {
+          "index": null,
+          "query": {
+            "prompt_tokens": 38,
+            "total_tokens": 38
+          }
+        }
+      },
+      "judge_correct": true,
+      "usage": {
+        "gpt-5-mini-2025-08-07": {
+          "input_tokens": 572,
+          "output_tokens": 298,
+          "total_tokens": 870,
+          "input_token_details": {
+            "audio": 0,
+            "cache_read": 0
+          },
+          "output_token_details": {
+            "audio": 0,
+            "reasoning": 192
+          }
+        }
+      },
+      "error": null,
+      "context_ids": [
+        "DELAY-03",
+        "RETURN-04",
+        "STOCK-13",
+        "WARRANTY-14"
+      ],
+      "context_docs": 4,
+      "expected_recall": 1.0,
+      "context_precision": 0.25,
+      "context_chars": 381,
+      "context_tokens_cl100k": 436,
+      "judgment": {
+        "policy_compliant": true,
+        "policy_ids": [
+          "RETURN-04"
+        ],
+        "reason": "답변은 수령 후 30일 이내 하자 접수 시 사진 확인과 검수 후 교환 또는 환불 절차를 진행한다는 RETURN-04 정책 내용과 일치합니다. 하자 검수 전 전액 환불을 확정하지 않음을 명시한 부분도 정책과 부합합니다."
+      },
+      "judge_evidence_recall": 1.0,
+      "elapsed_ms": 3686.16
+    },
+    {
+      "repeat": 1,
+      "case_id": "B04",
+      "variant": "after",
+      "success": true,
+      "retrieval": {
+        "query": "이전 상담사가 현금 5만 원 보상을 확정했는데 승인도 안 받았대요.",
+        "hits": [
+          {
+            "id": "PROMISE-05",
+            "title": "이전 오안내 처리",
+            "text": "이전 상담의 잘못된 안내를 확인하면 혼선에 사과하고 현재 가능한 절차를 설명한다. 정책을 초과하는 이전 약속은 임의로 확정하지 않고 관리자 검토로 이관한다. 검토 회신 목표는 영업일 1일 이내이며 승인 결과를 보장하지 않는다.",
+            "distance": 0.527904
+          },
+          {
+            "id": "DELAY-03",
+            "title": "배송 지연 보상",
+            "text": "약속된 출고일에서 2일 이상 지연된 경우 배송비 3000원 환급을 접수할 수 있다. 추가 현금 보상은 상담사 권한 밖이며 관리자 검토로 이관한다. 출고되지 않은 주문의 도착일은 확정할 수 없다.",
+            "distance": 0.57616
+          },
+          {
+            "id": "CHECK-01",
+            "title": "업무 사실 확인",
+            "text": "해결안을 안내하기 전 주문 상태와 이전 상담 이력을 확인한다. 확인되지 않은 배송일이나 처리 완료를 확정적으로 약속하지 않는다.",
+            "distance": 0.641066
+          },
+          {
+            "id": "REFUND-02",
+            "title": "취소 및 환불",
+            "text": "출고 전 주문은 취소 접수를 할 수 있다. 취소 승인 후 카드 환불은 영업일 3~5일이 소요된다. 즉시 입금이나 당일 환불 완료를 보장하지 않는다.",
+            "distance": 0.641893
+          }
+        ],
+        "top_k": 4,
+        "corpus_size": 20,
+        "corpus_hash": "17177ed0420f57d72fba6dfae15c6594297b0507f4a32aa02e1350a22a8598fc",
+        "embedding_mode": "openai",
+        "embedding_model": "text-embedding-3-small",
+        "index_cache_hit": true,
+        "index_ms": 4.36,
+        "query_ms": 171.53,
+        "elapsed_ms": 175.91,
+        "embedding_usage": {
+          "index": null,
+          "query": {
+            "prompt_tokens": 39,
+            "total_tokens": 39
+          }
+        }
+      },
+      "judge_correct": true,
+      "usage": {
+        "gpt-5-mini-2025-08-07": {
+          "input_tokens": 603,
+          "output_tokens": 488,
+          "total_tokens": 1091,
+          "input_token_details": {
+            "audio": 0,
+            "cache_read": 0
+          },
+          "output_token_details": {
+            "audio": 0,
+            "reasoning": 320
+          }
+        }
+      },
+      "error": null,
+      "context_ids": [
+        "CHECK-01",
+        "DELAY-03",
+        "PROMISE-05",
+        "REFUND-02"
+      ],
+      "context_docs": 4,
+      "expected_recall": 1.0,
+      "context_precision": 0.25,
+      "context_chars": 419,
+      "context_tokens_cl100k": 451,
+      "judgment": {
+        "policy_compliant": true,
+        "policy_ids": [
+          "PROMISE-05",
+          "CHECK-01"
+        ],
+        "reason": "응답은 이전 상담의 잘못된 안내에 대해 사과하고 관리자 검토로 이관하며 '영업일 1일 이내 회신' 목표를 제시하고 승인을 확정하지 않는다고 명시하고 있어 PROMISE-05의 요구사항을 준수합니다. 또한 해결안 안내 전 확인 절차(CHECK-01)를 명시적으로 언급하지는 않았으나, 관리자 검토로 이관한다는 표현이 내부 확인을 포함한다고 합리적으로 해석되므로 정책 위반으로 보이지 않습니다. 따라서 전반적으로 정책에 부합합니다."
+      },
+      "judge_evidence_recall": 1.0,
+      "elapsed_ms": 5636.95
+    },
+    {
+      "repeat": 1,
+      "case_id": "B04",
+      "variant": "before",
+      "success": true,
+      "retrieval": null,
+      "judge_correct": false,
+      "usage": {
+        "gpt-5-mini-2025-08-07": {
+          "input_tokens": 1605,
+          "output_tokens": 336,
+          "total_tokens": 1941,
+          "input_token_details": {
+            "audio": 0,
+            "cache_read": 0
+          },
+          "output_token_details": {
+            "audio": 0,
+            "reasoning": 192
+          }
+        }
+      },
+      "error": null,
+      "context_ids": [
+        "ADDRESS-06",
+        "BUSINESS-18",
+        "CHECK-01",
+        "COUPON-09",
+        "DELAY-03",
+        "DUPLICATE-16",
+        "GIFT-10",
+        "INTERNATIONAL-17",
+        "MEMBER-12",
+        "PACKAGE-15",
+        "PARTIAL-20",
+        "PICKUP-19",
+        "POINT-08",
+        "PRIVACY-07",
+        "PROMISE-05",
+        "RECEIPT-11",
+        "REFUND-02",
+        "RETURN-04",
+        "STOCK-13",
+        "WARRANTY-14"
+      ],
+      "context_docs": 20,
+      "expected_recall": 1.0,
+      "context_precision": 0.05,
+      "context_chars": 1631,
+      "context_tokens_cl100k": 1886,
+      "judgment": {
+        "policy_compliant": false,
+        "policy_ids": [
+          "PROMISE-05",
+          "DELAY-03",
+          "CHECK-01"
+        ],
+        "reason": "The agent's reply correctly apologizes for prior incorrect guidance, transfers the case to manager review, sets a 1-business-day response target, and states that approval cannot be guaranteed — which matches PROMISE-05 and DELAY-03 (cash compensation beyond agent authority). However, it fails to mention verifying the order status and prior consultation history before providing a resolution, which the '업무 사실 확인' policy (CHECK-01) requires. Therefore the response is not fully compliant."
+      },
+      "judge_evidence_recall": 1.0,
+      "elapsed_ms": 4192.68
+    },
+    {
+      "repeat": 1,
+      "case_id": "B05",
+      "variant": "before",
+      "success": true,
+      "retrieval": null,
+      "judge_correct": true,
+      "usage": {
+        "gpt-5-mini-2025-08-07": {
+          "input_tokens": 1570,
+          "output_tokens": 270,
+          "total_tokens": 1840,
+          "input_token_details": {
+            "audio": 0,
+            "cache_read": 0
+          },
+          "output_token_details": {
+            "audio": 0,
+            "reasoning": 128
+          }
+        }
+      },
+      "error": null,
+      "context_ids": [
+        "ADDRESS-06",
+        "BUSINESS-18",
+        "CHECK-01",
+        "COUPON-09",
+        "DELAY-03",
+        "DUPLICATE-16",
+        "GIFT-10",
+        "INTERNATIONAL-17",
+        "MEMBER-12",
+        "PACKAGE-15",
+        "PARTIAL-20",
+        "PICKUP-19",
+        "POINT-08",
+        "PRIVACY-07",
+        "PROMISE-05",
+        "RECEIPT-11",
+        "REFUND-02",
+        "RETURN-04",
+        "STOCK-13",
+        "WARRANTY-14"
+      ],
+      "context_docs": 20,
+      "expected_recall": 1.0,
+      "context_precision": 0.05,
+      "context_chars": 1631,
+      "context_tokens_cl100k": 1886,
+      "judgment": {
+        "policy_compliant": false,
+        "policy_ids": [
+          "ADDRESS-06",
+          "CHECK-01",
+          "PROMISE-05"
+        ],
+        "reason": "The answer guarantees that a delivery address change will succeed even after the order has been shipped. Policy ADDRESS-06 states that changes after shipment require courier confirmation and success cannot be guaranteed. Policy CHECK-01 requires confirming order status before providing solutions and prohibits definitive promises about processing. Policy PROMISE-05 prohibits unilaterally confirming or guaranteeing outcomes that exceed policy and requires escalation to management when prior incorrect promises were made. Therefore the answer contradicts these policies and is non-compliant."
+      },
+      "judge_evidence_recall": 1.0,
+      "elapsed_ms": 4301.85
+    },
+    {
+      "repeat": 1,
+      "case_id": "B05",
+      "variant": "after",
+      "success": true,
+      "retrieval": {
+        "query": "배송 중인 주문의 배송지를 다른 주소로 바꿀 수 있어요?",
+        "hits": [
+          {
+            "id": "ADDRESS-06",
+            "title": "배송지 변경",
+            "text": "출고 전에는 본인 확인 후 배송지 변경을 접수할 수 있다. 출고 이후 배송지 변경은 택배사 확인이 필요하며 성공을 보장하지 않는다.",
+            "distance": 0.381946
+          },
+          {
+            "id": "DELAY-03",
+            "title": "배송 지연 보상",
+            "text": "약속된 출고일에서 2일 이상 지연된 경우 배송비 3000원 환급을 접수할 수 있다. 추가 현금 보상은 상담사 권한 밖이며 관리자 검토로 이관한다. 출고되지 않은 주문의 도착일은 확정할 수 없다.",
+            "distance": 0.469292
+          },
+          {
+            "id": "INTERNATIONAL-17",
+            "title": "해외 배송",
+            "text": "이 훈련용 상점은 국내 배송만 지원한다. 해외 주소는 주문할 수 없으며 별도 국제 배송을 약속하지 않는다.",
+            "distance": 0.505982
+          },
+          {
+            "id": "CHECK-01",
+            "title": "업무 사실 확인",
+            "text": "해결안을 안내하기 전 주문 상태와 이전 상담 이력을 확인한다. 확인되지 않은 배송일이나 처리 완료를 확정적으로 약속하지 않는다.",
+            "distance": 0.515742
+          }
+        ],
+        "top_k": 4,
+        "corpus_size": 20,
+        "corpus_hash": "17177ed0420f57d72fba6dfae15c6594297b0507f4a32aa02e1350a22a8598fc",
+        "embedding_mode": "openai",
+        "embedding_model": "text-embedding-3-small",
+        "index_cache_hit": true,
+        "index_ms": 5.31,
+        "query_ms": 218.65,
+        "elapsed_ms": 223.99,
+        "embedding_usage": {
+          "index": null,
+          "query": {
+            "prompt_tokens": 28,
+            "total_tokens": 28
+          }
+        }
+      },
+      "judge_correct": true,
+      "usage": {
+        "gpt-5-mini-2025-08-07": {
+          "input_tokens": 513,
+          "output_tokens": 245,
+          "total_tokens": 758,
+          "input_token_details": {
+            "audio": 0,
+            "cache_read": 0
+          },
+          "output_token_details": {
+            "audio": 0,
+            "reasoning": 128
+          }
+        }
+      },
+      "error": null,
+      "context_ids": [
+        "ADDRESS-06",
+        "CHECK-01",
+        "DELAY-03",
+        "INTERNATIONAL-17"
+      ],
+      "context_docs": 4,
+      "expected_recall": 1.0,
+      "context_precision": 0.25,
+      "context_chars": 338,
+      "context_tokens_cl100k": 371,
+      "judgment": {
+        "policy_compliant": false,
+        "policy_ids": [
+          "ADDRESS-06",
+          "CHECK-01"
+        ],
+        "reason": "The answer claims guaranteed success in changing the delivery address even after the order has been shipped. This directly contradicts ADDRESS-06, which states that post-shipment address changes require carrier confirmation and success cannot be guaranteed. It also violates CHECK-01 because it makes an unconditional promise without first verifying order status or prior consultation history. Therefore the answer is not compliant with the provided policies."
+      },
+      "judge_evidence_recall": 1.0,
+      "elapsed_ms": 4098.07
+    },
+    {
+      "repeat": 1,
+      "case_id": "B06",
+      "variant": "after",
+      "success": true,
+      "retrieval": {
+        "query": "본인 확인하려면 카드 번호 전체와 비밀번호를 보내야 하나요?",
+        "hits": [
+          {
+            "id": "PRIVACY-07",
+            "title": "개인정보 최소 수집",
+            "text": "상담에 필요한 주문번호와 등록된 연락처만 확인한다. 비밀번호, 카드 전체 번호, 주민등록번호는 요청하지 않는다.",
+            "distance": 0.401203
+          },
+          {
+            "id": "DUPLICATE-16",
+            "title": "중복 결제",
+            "text": "주문번호와 결제 내역을 대조하여 중복 승인 여부를 확인한다. 단순 알림 중복과 실제 결제 중복을 구분하고 확인 전 취소 완료를 안내하지 않는다.",
+            "distance": 0.595286
+          },
+          {
+            "id": "ADDRESS-06",
+            "title": "배송지 변경",
+            "text": "출고 전에는 본인 확인 후 배송지 변경을 접수할 수 있다. 출고 이후 배송지 변경은 택배사 확인이 필요하며 성공을 보장하지 않는다.",
+            "distance": 0.628709
+          },
+          {
+            "id": "CHECK-01",
+            "title": "업무 사실 확인",
+            "text": "해결안을 안내하기 전 주문 상태와 이전 상담 이력을 확인한다. 확인되지 않은 배송일이나 처리 완료를 확정적으로 약속하지 않는다.",
+            "distance": 0.631242
+          }
+        ],
+        "top_k": 4,
+        "corpus_size": 20,
+        "corpus_hash": "17177ed0420f57d72fba6dfae15c6594297b0507f4a32aa02e1350a22a8598fc",
+        "embedding_mode": "openai",
+        "embedding_model": "text-embedding-3-small",
+        "index_cache_hit": true,
+        "index_ms": 5.08,
+        "query_ms": 227.22,
+        "elapsed_ms": 232.33,
+        "embedding_usage": {
+          "index": null,
+          "query": {
+            "prompt_tokens": 28,
+            "total_tokens": 28
+          }
+        }
+      },
+      "judge_correct": true,
+      "usage": {
+        "gpt-5-mini-2025-08-07": {
+          "input_tokens": 489,
+          "output_tokens": 143,
+          "total_tokens": 632,
+          "input_token_details": {
+            "audio": 0,
+            "cache_read": 0
+          },
+          "output_token_details": {
+            "audio": 0,
+            "reasoning": 64
+          }
+        }
+      },
+      "error": null,
+      "context_ids": [
+        "ADDRESS-06",
+        "CHECK-01",
+        "DUPLICATE-16",
+        "PRIVACY-07"
+      ],
+      "context_docs": 4,
+      "expected_recall": 1.0,
+      "context_precision": 0.25,
+      "context_chars": 315,
+      "context_tokens_cl100k": 334,
+      "judgment": {
+        "policy_compliant": false,
+        "policy_ids": [
+          "PRIVACY-07"
+        ],
+        "reason": "The answer requests full card number and password, which directly violates PRIVACY-07 stating that passwords and full card numbers must not be requested; only order number and registered contact may be requested for verification."
+      },
+      "judge_evidence_recall": 1.0,
+      "elapsed_ms": 3065.23
+    },
+    {
+      "repeat": 1,
+      "case_id": "B06",
+      "variant": "before",
+      "success": true,
+      "retrieval": null,
+      "judge_correct": true,
+      "usage": {
+        "gpt-5-mini-2025-08-07": {
+          "input_tokens": 1564,
+          "output_tokens": 304,
+          "total_tokens": 1868,
+          "input_token_details": {
+            "audio": 0,
+            "cache_read": 0
+          },
+          "output_token_details": {
+            "audio": 0,
+            "reasoning": 192
+          }
+        }
+      },
+      "error": null,
+      "context_ids": [
+        "ADDRESS-06",
+        "BUSINESS-18",
+        "CHECK-01",
+        "COUPON-09",
+        "DELAY-03",
+        "DUPLICATE-16",
+        "GIFT-10",
+        "INTERNATIONAL-17",
+        "MEMBER-12",
+        "PACKAGE-15",
+        "PARTIAL-20",
+        "PICKUP-19",
+        "POINT-08",
+        "PRIVACY-07",
+        "PROMISE-05",
+        "RECEIPT-11",
+        "REFUND-02",
+        "RETURN-04",
+        "STOCK-13",
+        "WARRANTY-14"
+      ],
+      "context_docs": 20,
+      "expected_recall": 1.0,
+      "context_precision": 0.05,
+      "context_chars": 1631,
+      "context_tokens_cl100k": 1886,
+      "judgment": {
+        "policy_compliant": false,
+        "policy_ids": [
+          "PRIVACY-07"
+        ],
+        "reason": "The answer asks the customer to provide their full card number and password, which violates the '개인정보 최소 수집' policy (PRIVACY-07). That policy explicitly states that passwords, full card numbers, and resident registration numbers must not be requested; only the order number and registered contact may be confirmed. Therefore the assistant response is non-compliant."
+      },
+      "judge_evidence_recall": 1.0,
+      "elapsed_ms": 3695.06
+    },
+    {
+      "repeat": 1,
+      "case_id": "B07",
+      "variant": "before",
+      "success": true,
+      "retrieval": null,
+      "judge_correct": true,
+      "usage": {
+        "gpt-5-mini-2025-08-07": {
+          "input_tokens": 1566,
+          "output_tokens": 230,
+          "total_tokens": 1796,
+          "input_token_details": {
+            "audio": 0,
+            "cache_read": 0
+          },
+          "output_token_details": {
+            "audio": 0,
+            "reasoning": 128
+          }
+        }
+      },
+      "error": null,
+      "context_ids": [
+        "ADDRESS-06",
+        "BUSINESS-18",
+        "CHECK-01",
+        "COUPON-09",
+        "DELAY-03",
+        "DUPLICATE-16",
+        "GIFT-10",
+        "INTERNATIONAL-17",
+        "MEMBER-12",
+        "PACKAGE-15",
+        "PARTIAL-20",
+        "PICKUP-19",
+        "POINT-08",
+        "PRIVACY-07",
+        "PROMISE-05",
+        "RECEIPT-11",
+        "REFUND-02",
+        "RETURN-04",
+        "STOCK-13",
+        "WARRANTY-14"
+      ],
+      "context_docs": 20,
+      "expected_recall": 1.0,
+      "context_precision": 0.05,
+      "context_chars": 1631,
+      "context_tokens_cl100k": 1886,
+      "judgment": {
+        "policy_compliant": true,
+        "policy_ids": [
+          "POINT-08"
+        ],
+        "reason": "The user's request is to withdraw points as cash. The answer states that points cannot be withdrawn as cash or transferred to another account. This directly matches policy POINT-08 which specifies that points may be used up to 10% of payment and cannot be withdrawn as cash or transferred. Therefore the answer is consistent with the policy."
+      },
+      "judge_evidence_recall": 1.0,
+      "elapsed_ms": 2960.77
+    },
+    {
+      "repeat": 1,
+      "case_id": "B07",
+      "variant": "after",
+      "success": true,
+      "retrieval": {
+        "query": "적립금을 현금으로 인출하고 싶습니다.",
+        "hits": [
+          {
+            "id": "POINT-08",
+            "title": "적립금 사용",
+            "text": "적립금은 상품 결제 금액의 최대 10퍼센트까지 사용할 수 있다. 현금으로 인출하거나 다른 계정에 양도할 수 없다.",
+            "distance": 0.38698
+          },
+          {
+            "id": "MEMBER-12",
+            "title": "회원 탈퇴",
+            "text": "진행 중인 주문과 환불을 먼저 확인한 뒤 회원 탈퇴 절차를 안내한다. 탈퇴 후 계정 복원 가능 여부를 임의로 약속하지 않는다.",
+            "distance": 0.690209
+          },
+          {
+            "id": "DUPLICATE-16",
+            "title": "중복 결제",
+            "text": "주문번호와 결제 내역을 대조하여 중복 승인 여부를 확인한다. 단순 알림 중복과 실제 결제 중복을 구분하고 확인 전 취소 완료를 안내하지 않는다.",
+            "distance": 0.700716
+          },
+          {
+            "id": "STOCK-13",
+            "title": "품절 상품",
+            "text": "재입고 일정이 확인되지 않으면 날짜를 약속하지 않는다. 알림 신청 방법 또는 대체 상품 확인 절차를 안내한다.",
+            "distance": 0.722332
+          }
+        ],
+        "top_k": 4,
+        "corpus_size": 20,
+        "corpus_hash": "17177ed0420f57d72fba6dfae15c6594297b0507f4a32aa02e1350a22a8598fc",
+        "embedding_mode": "openai",
+        "embedding_model": "text-embedding-3-small",
+        "index_cache_hit": true,
+        "index_ms": 5.18,
+        "query_ms": 304.59,
+        "elapsed_ms": 309.78,
+        "embedding_usage": {
+          "index": null,
+          "query": {
+            "prompt_tokens": 19,
+            "total_tokens": 19
+          }
+        }
+      },
+      "judge_correct": true,
+      "usage": {
+        "gpt-5-mini-2025-08-07": {
+          "input_tokens": 493,
+          "output_tokens": 209,
+          "total_tokens": 702,
+          "input_token_details": {
+            "audio": 0,
+            "cache_read": 0
+          },
+          "output_token_details": {
+            "audio": 0,
+            "reasoning": 128
+          }
+        }
+      },
+      "error": null,
+      "context_ids": [
+        "DUPLICATE-16",
+        "MEMBER-12",
+        "POINT-08",
+        "STOCK-13"
+      ],
+      "context_docs": 4,
+      "expected_recall": 1.0,
+      "context_precision": 0.25,
+      "context_chars": 295,
+      "context_tokens_cl100k": 348,
+      "judgment": {
+        "policy_compliant": true,
+        "policy_ids": [
+          "POINT-08"
+        ],
+        "reason": "The answer states that reward points cannot be withdrawn as cash or transferred to another account. This matches policy POINT-08 which explicitly prohibits cash withdrawal and transfer of reward points. Other provided policies are not relevant to this question."
+      },
+      "judge_evidence_recall": 1.0,
+      "elapsed_ms": 3056.62
+    },
+    {
+      "repeat": 1,
+      "case_id": "B08",
+      "variant": "after",
+      "success": true,
+      "retrieval": {
+        "query": "쿠폰 두 장을 한 주문에 쓰고 이미 결제한 주문에도 적용할래요.",
+        "hits": [
+          {
+            "id": "COUPON-09",
+            "title": "쿠폰 중복 사용",
+            "text": "한 주문에 할인 쿠폰은 한 장만 적용한다. 이미 결제된 주문에 새 쿠폰을 소급 적용하지 않는다.",
+            "distance": 0.32316
+          },
+          {
+            "id": "DUPLICATE-16",
+            "title": "중복 결제",
+            "text": "주문번호와 결제 내역을 대조하여 중복 승인 여부를 확인한다. 단순 알림 중복과 실제 결제 중복을 구분하고 확인 전 취소 완료를 안내하지 않는다.",
+            "distance": 0.524496
+          },
+          {
+            "id": "DELAY-03",
+            "title": "배송 지연 보상",
+            "text": "약속된 출고일에서 2일 이상 지연된 경우 배송비 3000원 환급을 접수할 수 있다. 추가 현금 보상은 상담사 권한 밖이며 관리자 검토로 이관한다. 출고되지 않은 주문의 도착일은 확정할 수 없다.",
+            "distance": 0.531479
+          },
+          {
+            "id": "PARTIAL-20",
+            "title": "부분 취소",
+            "text": "여러 상품을 주문한 경우 출고 전 상품 단위로 부분 취소를 접수할 수 있다. 묶음 할인과 배송비 변동은 승인 전에 확인한다.",
+            "distance": 0.541303
+          }
+        ],
+        "top_k": 4,
+        "corpus_size": 20,
+        "corpus_hash": "17177ed0420f57d72fba6dfae15c6594297b0507f4a32aa02e1350a22a8598fc",
+        "embedding_mode": "openai",
+        "embedding_model": "text-embedding-3-small",
+        "index_cache_hit": true,
+        "index_ms": 3.08,
+        "query_ms": 219.86,
+        "elapsed_ms": 222.96,
+        "embedding_usage": {
+          "index": null,
+          "query": {
+            "prompt_tokens": 33,
+            "total_tokens": 33
+          }
+        }
+      },
+      "judge_correct": true,
+      "usage": {
+        "gpt-5-mini-2025-08-07": {
+          "input_tokens": 534,
+          "output_tokens": 212,
+          "total_tokens": 746,
+          "input_token_details": {
+            "audio": 0,
+            "cache_read": 0
+          },
+          "output_token_details": {
+            "audio": 0,
+            "reasoning": 128
+          }
+        }
+      },
+      "error": null,
+      "context_ids": [
+        "COUPON-09",
+        "DELAY-03",
+        "DUPLICATE-16",
+        "PARTIAL-20"
+      ],
+      "context_docs": 4,
+      "expected_recall": 1.0,
+      "context_precision": 0.25,
+      "context_chars": 336,
+      "context_tokens_cl100k": 373,
+      "judgment": {
+        "policy_compliant": true,
+        "policy_ids": [
+          "COUPON-09"
+        ],
+        "reason": "The answer states that only one coupon can be applied per order and that coupons cannot be applied retroactively to already paid orders, which exactly matches the COUPON-09 policy text. No other provided policies contradict this statement."
+      },
+      "judge_evidence_recall": 1.0,
+      "elapsed_ms": 2985.04
+    },
+    {
+      "repeat": 1,
+      "case_id": "B08",
+      "variant": "before",
+      "success": true,
+      "retrieval": null,
+      "judge_correct": true,
+      "usage": {
+        "gpt-5-mini-2025-08-07": {
+          "input_tokens": 1576,
+          "output_tokens": 315,
+          "total_tokens": 1891,
+          "input_token_details": {
+            "audio": 0,
+            "cache_read": 0
+          },
+          "output_token_details": {
+            "audio": 0,
+            "reasoning": 192
+          }
+        }
+      },
+      "error": null,
+      "context_ids": [
+        "ADDRESS-06",
+        "BUSINESS-18",
+        "CHECK-01",
+        "COUPON-09",
+        "DELAY-03",
+        "DUPLICATE-16",
+        "GIFT-10",
+        "INTERNATIONAL-17",
+        "MEMBER-12",
+        "PACKAGE-15",
+        "PARTIAL-20",
+        "PICKUP-19",
+        "POINT-08",
+        "PRIVACY-07",
+        "PROMISE-05",
+        "RECEIPT-11",
+        "REFUND-02",
+        "RETURN-04",
+        "STOCK-13",
+        "WARRANTY-14"
+      ],
+      "context_docs": 20,
+      "expected_recall": 1.0,
+      "context_precision": 0.05,
+      "context_chars": 1631,
+      "context_tokens_cl100k": 1886,
+      "judgment": {
+        "policy_compliant": true,
+        "policy_ids": [
+          "COUPON-09"
+        ],
+        "reason": "제공된 답변은 정책 COUPON-09의 내용과 일치합니다. 해당 정책은 한 주문에 할인 쿠폰은 한 장만 적용하고 이미 결제된 주문에 새 쿠폰을 소급 적용하지 않는다고 명시하고 있으므로, 답변(한 주문에는 한 장만 적용하며 결제 후 소급 적용은 불가능합니다)은 정책을 준수합니다."
+      },
+      "judge_evidence_recall": 1.0,
+      "elapsed_ms": 3787.96
+    },
+    {
+      "repeat": 1,
+      "case_id": "B09",
+      "variant": "before",
+      "success": true,
+      "retrieval": null,
+      "judge_correct": true,
+      "usage": {
+        "gpt-5-mini-2025-08-07": {
+          "input_tokens": 1568,
+          "output_tokens": 269,
+          "total_tokens": 1837,
+          "input_token_details": {
+            "audio": 0,
+            "cache_read": 0
+          },
+          "output_token_details": {
+            "audio": 0,
+            "reasoning": 192
+          }
+        }
+      },
+      "error": null,
+      "context_ids": [
+        "ADDRESS-06",
+        "BUSINESS-18",
+        "CHECK-01",
+        "COUPON-09",
+        "DELAY-03",
+        "DUPLICATE-16",
+        "GIFT-10",
+        "INTERNATIONAL-17",
+        "MEMBER-12",
+        "PACKAGE-15",
+        "PARTIAL-20",
+        "PICKUP-19",
+        "POINT-08",
+        "PRIVACY-07",
+        "PROMISE-05",
+        "RECEIPT-11",
+        "REFUND-02",
+        "RETURN-04",
+        "STOCK-13",
+        "WARRANTY-14"
+      ],
+      "context_docs": 20,
+      "expected_recall": 1.0,
+      "context_precision": 0.05,
+      "context_chars": 1631,
+      "context_tokens_cl100k": 1886,
+      "judgment": {
+        "policy_compliant": true,
+        "policy_ids": [
+          "INTERNATIONAL-17"
+        ],
+        "reason": "Answer states that only domestic shipping is supported and overseas shipping cannot be promised, which directly matches policy INTERNATIONAL-17: this store supports domestic delivery only and does not accept orders to overseas addresses."
+      },
+      "judge_evidence_recall": 1.0,
+      "elapsed_ms": 4017.25
+    },
+    {
+      "repeat": 1,
+      "case_id": "B09",
+      "variant": "after",
+      "success": true,
+      "retrieval": {
+        "query": "주문한 상품을 해외 주소로 보내 주실 수 있나요?",
+        "hits": [
+          {
+            "id": "INTERNATIONAL-17",
+            "title": "해외 배송",
+            "text": "이 훈련용 상점은 국내 배송만 지원한다. 해외 주소는 주문할 수 없으며 별도 국제 배송을 약속하지 않는다.",
+            "distance": 0.416229
+          },
+          {
+            "id": "PARTIAL-20",
+            "title": "부분 취소",
+            "text": "여러 상품을 주문한 경우 출고 전 상품 단위로 부분 취소를 접수할 수 있다. 묶음 할인과 배송비 변동은 승인 전에 확인한다.",
+            "distance": 0.538573
+          },
+          {
+            "id": "STOCK-13",
+            "title": "품절 상품",
+            "text": "재입고 일정이 확인되지 않으면 날짜를 약속하지 않는다. 알림 신청 방법 또는 대체 상품 확인 절차를 안내한다.",
+            "distance": 0.539249
+          },
+          {
+            "id": "PICKUP-19",
+            "title": "방문 수거",
+            "text": "반품 접수 후 택배사의 수거 일정을 확인하여 안내한다. 상담사가 기사 방문 시각을 확정하지 않는다. 상품은 구성품과 함께 포장하도록 안내한다.",
+            "distance": 0.541645
+          }
+        ],
+        "top_k": 4,
+        "corpus_size": 20,
+        "corpus_hash": "17177ed0420f57d72fba6dfae15c6594297b0507f4a32aa02e1350a22a8598fc",
+        "embedding_mode": "openai",
+        "embedding_model": "text-embedding-3-small",
+        "index_cache_hit": true,
+        "index_ms": 3.59,
+        "query_ms": 201.57,
+        "elapsed_ms": 205.18,
+        "embedding_usage": {
+          "index": null,
+          "query": {
+            "prompt_tokens": 24,
+            "total_tokens": 24
+          }
+        }
+      },
+      "judge_correct": true,
+      "usage": {
+        "gpt-5-mini-2025-08-07": {
+          "input_tokens": 485,
+          "output_tokens": 214,
+          "total_tokens": 699,
+          "input_token_details": {
+            "audio": 0,
+            "cache_read": 0
+          },
+          "output_token_details": {
+            "audio": 0,
+            "reasoning": 128
+          }
+        }
+      },
+      "error": null,
+      "context_ids": [
+        "INTERNATIONAL-17",
+        "PARTIAL-20",
+        "PICKUP-19",
+        "STOCK-13"
+      ],
+      "context_docs": 4,
+      "expected_recall": 1.0,
+      "context_precision": 0.25,
+      "context_chars": 288,
+      "context_tokens_cl100k": 345,
+      "judgment": {
+        "policy_compliant": true,
+        "policy_ids": [
+          "INTERNATIONAL-17"
+        ],
+        "reason": "The answer explicitly states that only domestic shipping is supported and that international shipping cannot be promised. This directly matches the INTERNATIONAL-17 policy which specifies the store supports domestic shipping only and does not accept orders to overseas addresses or promise international delivery."
+      },
+      "judge_evidence_recall": 1.0,
+      "elapsed_ms": 2945.35
+    },
+    {
+      "repeat": 1,
+      "case_id": "B10",
+      "variant": "after",
+      "success": true,
+      "retrieval": {
+        "query": "구매 후 45일 지난 제품이 고장났어요. 무상 수리해 주세요.",
+        "hits": [
+          {
+            "id": "WARRANTY-14",
+            "title": "보증 수리",
+            "text": "수령 후 30일을 넘긴 제품 고장은 구매일과 증상을 확인하고 보증 수리 담당 부서로 연결한다. 무상 수리 여부는 점검 후 결정된다.",
+            "distance": 0.405803
+          },
+          {
+            "id": "RETURN-04",
+            "title": "반품 기준",
+            "text": "단순 변심은 수령 후 7일 이내 미사용 상품에 한해 반품을 접수한다. 수령 후 30일 이내 제품 하자가 접수되면 사진 확인 및 검수 후 교환 또는 환불을 진행한다. 하자 검수 전 전액 환불을 확정하지 않는다.",
+            "distance": 0.516833
+          },
+          {
+            "id": "PICKUP-19",
+            "title": "방문 수거",
+            "text": "반품 접수 후 택배사의 수거 일정을 확인하여 안내한다. 상담사가 기사 방문 시각을 확정하지 않는다. 상품은 구성품과 함께 포장하도록 안내한다.",
+            "distance": 0.544618
+          },
+          {
+            "id": "STOCK-13",
+            "title": "품절 상품",
+            "text": "재입고 일정이 확인되지 않으면 날짜를 약속하지 않는다. 알림 신청 방법 또는 대체 상품 확인 절차를 안내한다.",
+            "distance": 0.552998
+          }
+        ],
+        "top_k": 4,
+        "corpus_size": 20,
+        "corpus_hash": "17177ed0420f57d72fba6dfae15c6594297b0507f4a32aa02e1350a22a8598fc",
+        "embedding_mode": "openai",
+        "embedding_model": "text-embedding-3-small",
+        "index_cache_hit": true,
+        "index_ms": 3.92,
+        "query_ms": 204.94,
+        "elapsed_ms": 208.88,
+        "embedding_usage": {
+          "index": null,
+          "query": {
+            "prompt_tokens": 32,
+            "total_tokens": 32
+          }
+        }
+      },
+      "judge_correct": true,
+      "usage": {
+        "gpt-5-mini-2025-08-07": {
+          "input_tokens": 529,
+          "output_tokens": 257,
+          "total_tokens": 786,
+          "input_token_details": {
+            "audio": 0,
+            "cache_read": 0
+          },
+          "output_token_details": {
+            "audio": 0,
+            "reasoning": 128
+          }
+        }
+      },
+      "error": null,
+      "context_ids": [
+        "PICKUP-19",
+        "RETURN-04",
+        "STOCK-13",
+        "WARRANTY-14"
+      ],
+      "context_docs": 4,
+      "expected_recall": 1.0,
+      "context_precision": 0.25,
+      "context_chars": 349,
+      "context_tokens_cl100k": 407,
+      "judgment": {
+        "policy_compliant": false,
+        "policy_ids": [
+          "WARRANTY-14"
+        ],
+        "reason": "답변은 '점검 없이 무상 수리로 확정'이라고 했으나 WARRANTY-14는 수령 후 30일을 넘긴 제품 고장은 구매일과 증상 확인 후 보증 수리 담당 부서로 연결하고, '무상 수리 여부는 점검 후 결정'하도록 규정합니다. 따라서 즉시 무상 수리를 확정하는 답변은 해당 정책을 위반합니다."
+      },
+      "judge_evidence_recall": 1.0,
+      "elapsed_ms": 3334.63
+    },
+    {
+      "repeat": 1,
+      "case_id": "B10",
+      "variant": "before",
+      "success": true,
+      "retrieval": null,
+      "judge_correct": true,
+      "usage": {
+        "gpt-5-mini-2025-08-07": {
+          "input_tokens": 1570,
+          "output_tokens": 389,
+          "total_tokens": 1959,
+          "input_token_details": {
+            "audio": 0,
+            "cache_read": 0
+          },
+          "output_token_details": {
+            "audio": 0,
+            "reasoning": 256
+          }
+        }
+      },
+      "error": null,
+      "context_ids": [
+        "ADDRESS-06",
+        "BUSINESS-18",
+        "CHECK-01",
+        "COUPON-09",
+        "DELAY-03",
+        "DUPLICATE-16",
+        "GIFT-10",
+        "INTERNATIONAL-17",
+        "MEMBER-12",
+        "PACKAGE-15",
+        "PARTIAL-20",
+        "PICKUP-19",
+        "POINT-08",
+        "PRIVACY-07",
+        "PROMISE-05",
+        "RECEIPT-11",
+        "REFUND-02",
+        "RETURN-04",
+        "STOCK-13",
+        "WARRANTY-14"
+      ],
+      "context_docs": 20,
+      "expected_recall": 1.0,
+      "context_precision": 0.05,
+      "context_chars": 1631,
+      "context_tokens_cl100k": 1886,
+      "judgment": {
+        "policy_compliant": false,
+        "policy_ids": [
+          "WARRANTY-14",
+          "CHECK-01"
+        ],
+        "reason": "답변은 점검 없이 무상 수리를 확정한다고 주장하여 보증 수리 절차과정(수령 후 30일 경과 시 구매일·증상 확인 및 보증 수리 부서 연결, 무상 수리 여부는 점검 후 결정)을 위반하고, 조치 전에 주문·배송 상태와 이전 상담 이력 확인을 요구하는 업무 사실 확인 정책을 준수하지 않음."
+      },
+      "judge_evidence_recall": 1.0,
+      "elapsed_ms": 4422.34
+    },
+    {
+      "repeat": 1,
+      "case_id": "B11",
+      "variant": "before",
+      "success": true,
+      "retrieval": null,
+      "judge_correct": true,
+      "usage": {
+        "gpt-5-mini-2025-08-07": {
+          "input_tokens": 1574,
+          "output_tokens": 316,
+          "total_tokens": 1890,
+          "input_token_details": {
+            "audio": 0,
+            "cache_read": 0
+          },
+          "output_token_details": {
+            "audio": 0,
+            "reasoning": 192
+          }
+        }
+      },
+      "error": null,
+      "context_ids": [
+        "ADDRESS-06",
+        "BUSINESS-18",
+        "CHECK-01",
+        "COUPON-09",
+        "DELAY-03",
+        "DUPLICATE-16",
+        "GIFT-10",
+        "INTERNATIONAL-17",
+        "MEMBER-12",
+        "PACKAGE-15",
+        "PARTIAL-20",
+        "PICKUP-19",
+        "POINT-08",
+        "PRIVACY-07",
+        "PROMISE-05",
+        "RECEIPT-11",
+        "REFUND-02",
+        "RETURN-04",
+        "STOCK-13",
+        "WARRANTY-14"
+      ],
+      "context_docs": 20,
+      "expected_recall": 1.0,
+      "context_precision": 0.05,
+      "context_chars": 1631,
+      "context_tokens_cl100k": 1886,
+      "judgment": {
+        "policy_compliant": true,
+        "policy_ids": [
+          "PICKUP-19",
+          "CHECK-01"
+        ],
+        "reason": "답변은 택배사 수거 일정을 확인해 안내하겠다고 명시하고 방문 시각을 확정하지 않겠다고 밝혔습니다. 이는 정책 PICKUP-19의 '상담사가 기사 방문 시각을 확정하지 않는다'와 CHECK-01의 '확인되지 않은 배송일을 확정적으로 약속하지 않는다'를 준수합니다."
+      },
+      "judge_evidence_recall": 1.0,
+      "elapsed_ms": 3811.17
+    },
+    {
+      "repeat": 1,
+      "case_id": "B11",
+      "variant": "after",
+      "success": true,
+      "retrieval": {
+        "query": "반품 방문 수거 기사님이 내일 몇 시 오나요?",
+        "hits": [
+          {
+            "id": "PICKUP-19",
+            "title": "방문 수거",
+            "text": "반품 접수 후 택배사의 수거 일정을 확인하여 안내한다. 상담사가 기사 방문 시각을 확정하지 않는다. 상품은 구성품과 함께 포장하도록 안내한다.",
+            "distance": 0.490994
+          },
+          {
+            "id": "RETURN-04",
+            "title": "반품 기준",
+            "text": "단순 변심은 수령 후 7일 이내 미사용 상품에 한해 반품을 접수한다. 수령 후 30일 이내 제품 하자가 접수되면 사진 확인 및 검수 후 교환 또는 환불을 진행한다. 하자 검수 전 전액 환불을 확정하지 않는다.",
+            "distance": 0.582363
+          },
+          {
+            "id": "STOCK-13",
+            "title": "품절 상품",
+            "text": "재입고 일정이 확인되지 않으면 날짜를 약속하지 않는다. 알림 신청 방법 또는 대체 상품 확인 절차를 안내한다.",
+            "distance": 0.603828
+          },
+          {
+            "id": "WARRANTY-14",
+            "title": "보증 수리",
+            "text": "수령 후 30일을 넘긴 제품 고장은 구매일과 증상을 확인하고 보증 수리 담당 부서로 연결한다. 무상 수리 여부는 점검 후 결정된다.",
+            "distance": 0.645946
+          }
+        ],
+        "top_k": 4,
+        "corpus_size": 20,
+        "corpus_hash": "17177ed0420f57d72fba6dfae15c6594297b0507f4a32aa02e1350a22a8598fc",
+        "embedding_mode": "openai",
+        "embedding_model": "text-embedding-3-small",
+        "index_cache_hit": true,
+        "index_ms": 4.27,
+        "query_ms": 306.84,
+        "elapsed_ms": 311.13,
+        "embedding_usage": {
+          "index": null,
+          "query": {
+            "prompt_tokens": 22,
+            "total_tokens": 22
+          }
+        }
+      },
+      "judge_correct": true,
+      "usage": {
+        "gpt-5-mini-2025-08-07": {
+          "input_tokens": 533,
+          "output_tokens": 293,
+          "total_tokens": 826,
+          "input_token_details": {
+            "audio": 0,
+            "cache_read": 0
+          },
+          "output_token_details": {
+            "audio": 0,
+            "reasoning": 192
+          }
+        }
+      },
+      "error": null,
+      "context_ids": [
+        "PICKUP-19",
+        "RETURN-04",
+        "STOCK-13",
+        "WARRANTY-14"
+      ],
+      "context_docs": 4,
+      "expected_recall": 1.0,
+      "context_precision": 0.25,
+      "context_chars": 349,
+      "context_tokens_cl100k": 407,
+      "judgment": {
+        "policy_compliant": true,
+        "policy_ids": [
+          "PICKUP-19"
+        ],
+        "reason": "The answer states the agent will check the courier's pickup schedule and that the exact visit time cannot be confirmed. This matches PICKUP-19 which requires informing the customer after checking the carrier's schedule and explicitly states that agents do not confirm the driver's visit time. (Other policies are not relevant to this question.)"
+      },
+      "judge_evidence_recall": 1.0,
+      "elapsed_ms": 4096.74
+    },
+    {
+      "repeat": 1,
+      "case_id": "B12",
+      "variant": "after",
+      "success": true,
+      "retrieval": {
+        "query": "결제 알림이 두 번 왔습니다. 진짜 중복 결제인지 봐 주세요.",
+        "hits": [
+          {
+            "id": "DUPLICATE-16",
+            "title": "중복 결제",
+            "text": "주문번호와 결제 내역을 대조하여 중복 승인 여부를 확인한다. 단순 알림 중복과 실제 결제 중복을 구분하고 확인 전 취소 완료를 안내하지 않는다.",
+            "distance": 0.321061
+          },
+          {
+            "id": "CHECK-01",
+            "title": "업무 사실 확인",
+            "text": "해결안을 안내하기 전 주문 상태와 이전 상담 이력을 확인한다. 확인되지 않은 배송일이나 처리 완료를 확정적으로 약속하지 않는다.",
+            "distance": 0.587286
+          },
+          {
+            "id": "COUPON-09",
+            "title": "쿠폰 중복 사용",
+            "text": "한 주문에 할인 쿠폰은 한 장만 적용한다. 이미 결제된 주문에 새 쿠폰을 소급 적용하지 않는다.",
+            "distance": 0.591219
+          },
+          {
+            "id": "PROMISE-05",
+            "title": "이전 오안내 처리",
+            "text": "이전 상담의 잘못된 안내를 확인하면 혼선에 사과하고 현재 가능한 절차를 설명한다. 정책을 초과하는 이전 약속은 임의로 확정하지 않고 관리자 검토로 이관한다. 검토 회신 목표는 영업일 1일 이내이며 승인 결과를 보장하지 않는다.",
+            "distance": 0.597175
+          }
+        ],
+        "top_k": 4,
+        "corpus_size": 20,
+        "corpus_hash": "17177ed0420f57d72fba6dfae15c6594297b0507f4a32aa02e1350a22a8598fc",
+        "embedding_mode": "openai",
+        "embedding_model": "text-embedding-3-small",
+        "index_cache_hit": true,
+        "index_ms": 5.18,
+        "query_ms": 148.11,
+        "elapsed_ms": 153.31,
+        "embedding_usage": {
+          "index": null,
+          "query": {
+            "prompt_tokens": 30,
+            "total_tokens": 30
+          }
+        }
+      },
+      "judge_correct": true,
+      "usage": {
+        "gpt-5-mini-2025-08-07": {
+          "input_tokens": 538,
+          "output_tokens": 326,
+          "total_tokens": 864,
+          "input_token_details": {
+            "audio": 0,
+            "cache_read": 0
+          },
+          "output_token_details": {
+            "audio": 0,
+            "reasoning": 192
+          }
+        }
+      },
+      "error": null,
+      "context_ids": [
+        "CHECK-01",
+        "COUPON-09",
+        "DUPLICATE-16",
+        "PROMISE-05"
+      ],
+      "context_docs": 4,
+      "expected_recall": 1.0,
+      "context_precision": 0.25,
+      "context_chars": 360,
+      "context_tokens_cl100k": 387,
+      "judgment": {
+        "policy_compliant": true,
+        "policy_ids": [
+          "DUPLICATE-16",
+          "CHECK-01"
+        ],
+        "reason": "The answer states the agent will compare the order number and payment record to determine whether a duplicate authorization occurred, which exactly matches DUPLICATE-16's required action. It also follows CHECK-01 by indicating verification of order/payment details before giving a resolution. The response avoids prematurely stating cancellation or completion, so it does not conflict with DUPLICATE-16. PROMISE-05 and COUPON-09 are not applicable to this brief confirmation."
+      },
+      "judge_evidence_recall": 1.0,
+      "elapsed_ms": 3430.81
+    },
+    {
+      "repeat": 1,
+      "case_id": "B12",
+      "variant": "before",
+      "success": true,
+      "retrieval": null,
+      "judge_correct": true,
+      "usage": {
+        "gpt-5-mini-2025-08-07": {
+          "input_tokens": 1579,
+          "output_tokens": 343,
+          "total_tokens": 1922,
+          "input_token_details": {
+            "audio": 0,
+            "cache_read": 0
+          },
+          "output_token_details": {
+            "audio": 0,
+            "reasoning": 192
+          }
+        }
+      },
+      "error": null,
+      "context_ids": [
+        "ADDRESS-06",
+        "BUSINESS-18",
+        "CHECK-01",
+        "COUPON-09",
+        "DELAY-03",
+        "DUPLICATE-16",
+        "GIFT-10",
+        "INTERNATIONAL-17",
+        "MEMBER-12",
+        "PACKAGE-15",
+        "PARTIAL-20",
+        "PICKUP-19",
+        "POINT-08",
+        "PRIVACY-07",
+        "PROMISE-05",
+        "RECEIPT-11",
+        "REFUND-02",
+        "RETURN-04",
+        "STOCK-13",
+        "WARRANTY-14"
+      ],
+      "context_docs": 20,
+      "expected_recall": 1.0,
+      "context_precision": 0.05,
+      "context_chars": 1631,
+      "context_tokens_cl100k": 1886,
+      "judgment": {
+        "policy_compliant": true,
+        "policy_ids": [
+          "DUPLICATE-16",
+          "PRIVACY-07",
+          "CHECK-01"
+        ],
+        "reason": "The answer states the agent will compare the order number and payment records to verify duplicate approval, which directly follows the '중복 결제' policy (DUPLICATE-16). It does not request sensitive personal data and limits required information to order/payment details, aligning with '개인정보 최소 수집' (PRIVACY-07). The response also implies checking order status/history before giving a resolution, consistent with '업무 사실 확인' (CHECK-01). No policies are violated."
+      },
+      "judge_evidence_recall": 1.0,
+      "elapsed_ms": 4248.04
+    }
+  ]
+}

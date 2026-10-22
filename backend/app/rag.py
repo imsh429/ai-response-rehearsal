@@ -6,6 +6,7 @@ import os
 import re
 import threading
 import time
+from collections import OrderedDict
 from pathlib import Path
 from .config import DB_PATH, MODE
 
@@ -26,7 +27,9 @@ class Embeddings:
         if self.mode == 'openai':
             if self.client is None:
                 from openai import OpenAI
-                self.client = OpenAI(timeout=45, max_retries=1)
+                # The MCP worker owns the overall deadline. Never multiply it
+                # with hidden SDK retries before the evaluator even starts.
+                self.client = OpenAI(timeout=15, max_retries=0)
             result = self.client.embeddings.create(model=self.model, input=texts)
             vectors = [x.embedding for x in sorted(result.data, key=lambda x: x.index)]
             return vectors, result.usage.model_dump()
@@ -44,13 +47,18 @@ class Embeddings:
 
 
 class PolicyRetriever:
-    def __init__(self, path=None, embeddings=None):
+    def __init__(self, path=None, embeddings=None, progress=None):
+        self.progress = progress or (lambda stage: None)
+        self.progress('chroma_import')
         import chromadb
         from chromadb.config import Settings
         self.embeddings = embeddings or Embeddings()
+        self.progress('chroma_init')
         self.client = chromadb.PersistentClient(path=str(path or Path(os.getenv('RAG_DB_PATH', str(DB_PATH.parent/'chroma')))),
                                                settings=Settings(anonymized_telemetry=False))
         self.lock = threading.Lock()
+        self._collections = {}
+        self._queries = OrderedDict()
 
     def search(self, documents, query, top_k=4):
         query = query.strip()
@@ -63,26 +71,47 @@ class PolicyRetriever:
         identity = hashlib.sha256((digest+self.embeddings.mode+self.embeddings.model).encode()).hexdigest()[:24]
         index_usage = None
         with self.lock:
-            collection = self.client.get_or_create_collection('policies-'+identity,
-                embedding_function=None, metadata={'hnsw:space': 'cosine'})
-            indexed = set(collection.get(include=[])['ids'])
-            missing = [d for d in documents if d['id'] not in indexed]
+            self.progress('chroma_collection')
+            collection = self._collections.get(identity)
+            if collection is None:
+                collection = self.client.get_or_create_collection('policies-'+identity,
+                    embedding_function=None, metadata={'hnsw:space': 'cosine'})
+                indexed = set(collection.get(include=[])['ids'])
+                missing = [d for d in documents if d['id'] not in indexed]
+            else:
+                missing = []
             if missing:
+                self.progress('document_embeddings')
                 vectors, index_usage = self.embeddings.embed([d['title']+'\n'+d['text'] for d in missing])
+                self.progress('chroma_upsert')
                 collection.upsert(ids=[d['id'] for d in missing], embeddings=vectors,
                     documents=[d['text'] for d in missing], metadatas=[{'title':d['title']} for d in missing])
+            self._collections[identity] = collection
         index_ms = round((time.perf_counter()-started)*1000, 2)
         query_started = time.perf_counter()
-        vectors, query_usage = self.embeddings.embed([query])
-        result = collection.query(query_embeddings=vectors, n_results=min(top_k, len(documents)),
-                                  include=['documents','metadatas','distances'])
+        # Exact query/model cache only: never reuse a merely similar query.
+        cache_key = (self.embeddings.mode, self.embeddings.model, query)
+        with self.lock:
+            query_cache_hit = cache_key in self._queries
+            if query_cache_hit:
+                vectors = self._queries.pop(cache_key)
+                query_usage = None
+            else:
+                self.progress('query_embeddings')
+                vectors, query_usage = self.embeddings.embed([query])
+            self._queries[cache_key] = vectors
+            if len(self._queries) > 128:
+                self._queries.popitem(last=False)
+            self.progress('chroma_query')
+            result = collection.query(query_embeddings=vectors, n_results=min(top_k, len(documents)),
+                                      include=['documents','metadatas','distances'])
         # Resolve authoritative snapshot text, not independently generated excerpts.
         by_id = {d['id']:d for d in documents}
         hits = [{**by_id[pid], 'distance':round(float(distance), 6)}
                 for pid, distance in zip(result['ids'][0], result['distances'][0])]
         return {'query':query, 'hits':hits, 'top_k':top_k, 'corpus_size':len(documents),
                 'corpus_hash':digest, 'embedding_mode':self.embeddings.mode, 'embedding_model':self.embeddings.model,
-                'index_cache_hit':not bool(missing), 'index_ms':index_ms,
+                'index_cache_hit':not bool(missing), 'query_cache_hit':query_cache_hit, 'index_ms':index_ms,
                 'query_ms':round((time.perf_counter()-query_started)*1000, 2),
                 'elapsed_ms':round((time.perf_counter()-started)*1000, 2),
                 'embedding_usage':{'index':index_usage, 'query':query_usage}}
