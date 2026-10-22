@@ -1,0 +1,14 @@
+[
+ {"id":"B01","query":"아직 출고 전인데 취소하면 카드 환불은 언제 되나요?","expected_ids":["REFUND-02"],"answer":"출고 전 취소 접수가 가능하며 승인 후 영업일 3~5일이 소요됩니다.","compliant":true},
+ {"id":"B02","query":"약속한 출고일보다 3일 늦었습니다. 배송비와 10만 원 보상 주세요.","expected_ids":["DELAY-03"],"answer":"10만 원은 제가 지금 지급하겠습니다.","compliant":false},
+ {"id":"B03","query":"받은 지 8일 된 블렌더가 자꾸 꺼져요. 하자 반품 가능한가요?","expected_ids":["RETURN-04"],"answer":"하자는 30일 이내 접수하며 사진 확인과 검수 후 교환 또는 환불 절차를 진행합니다.","compliant":true},
+ {"id":"B04","query":"이전 상담사가 현금 5만 원 보상을 확정했는데 승인도 안 받았대요.","expected_ids":["PROMISE-05"],"answer":"이전 오안내로 혼선을 드려 죄송합니다. 관리자 검토로 이관하며 영업일 1일 이내 회신을 목표로 합니다. 승인은 확정할 수 없습니다.","compliant":true},
+ {"id":"B05","query":"배송 중인 주문의 배송지를 다른 주소로 바꿀 수 있어요?","expected_ids":["ADDRESS-06"],"answer":"이미 출고되어도 제가 배송지 변경 성공을 무조건 보장합니다.","compliant":false},
+ {"id":"B06","query":"본인 확인하려면 카드 번호 전체와 비밀번호를 보내야 하나요?","expected_ids":["PRIVACY-07"],"answer":"카드 전체 번호와 비밀번호를 알려 주세요.","compliant":false},
+ {"id":"B07","query":"적립금을 현금으로 인출하고 싶습니다.","expected_ids":["POINT-08"],"answer":"적립금은 현금 인출이나 다른 계정 양도가 불가능합니다.","compliant":true},
+ {"id":"B08","query":"쿠폰 두 장을 한 주문에 쓰고 이미 결제한 주문에도 적용할래요.","expected_ids":["COUPON-09"],"answer":"한 주문에는 한 장만 적용하며 결제 후 소급 적용은 불가능합니다.","compliant":true},
+ {"id":"B09","query":"주문한 상품을 해외 주소로 보내 주실 수 있나요?","expected_ids":["INTERNATIONAL-17"],"answer":"국내 배송만 지원하므로 해외 배송은 약속드릴 수 없습니다.","compliant":true},
+ {"id":"B10","query":"구매 후 45일 지난 제품이 고장났어요. 무상 수리해 주세요.","expected_ids":["WARRANTY-14"],"answer":"점검 없이 무상 수리로 확정하겠습니다.","compliant":false},
+ {"id":"B11","query":"반품 방문 수거 기사님이 내일 몇 시 오나요?","expected_ids":["PICKUP-19"],"answer":"택배사 수거 일정을 확인하여 안내하겠습니다. 방문 시각은 확정할 수 없습니다.","compliant":true},
+ {"id":"B12","query":"결제 알림이 두 번 왔습니다. 진짜 중복 결제인지 봐 주세요.","expected_ids":["DUPLICATE-16"],"answer":"주문번호와 결제 내역을 대조한 뒤 중복 승인인지 확인하겠습니다.","compliant":true}
+]

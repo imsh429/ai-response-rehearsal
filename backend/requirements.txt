@@ -1,0 +1,13 @@
+fastapi==0.156.4
+uvicorn[standard]==0.54.0
+python-dotenv==1.2.4
+langchain==1.4.6
+langchain-openai==1.7.2
+langgraph==1.2.16
+langsmith==0.14.11
+mcp==1.26.0
+pydantic==2.14.1
+httpx==0.28.1
+
+# Explicit embeddings are supplied; Chroma does not download a default model.
+chromadb==1.5.9
